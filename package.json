@@ -1,0 +1,17 @@
+{
+  "name": "signal-viewer",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "chat:get": "./export-new-chats.sh",
+    "chat:fast": "./export-new-chats-fast.sh",
+    "chat:get:full": "uv run sigexport ./signal-chats"
+  },
+  "devDependencies": {
+    "@types/bun": "1.2.20"
+  },
+  "peerDependencies": {
+    "typescript": "^5.9.2"
+  }
+}
