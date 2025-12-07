@@ -7,7 +7,7 @@ A tool for exporting and viewing Signal chat history with incremental updates.
 1. Install dependencies:
    - [uv](https://github.com/astral-sh/uv) for Python package management
    - [Bun](https://bun.sh) for running scripts
-   - [sigexport](https://github.com/carderne/sigexport) (installed via uv)
+   - [sigexport](https:/$$/github.com/carderne/sigexport) (installed via uv)
 
 2. Install the project:
    ```bash

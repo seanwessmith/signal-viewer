@@ -4,6 +4,53 @@ globs: "*.ts, *.tsx, *.html, *.css, *.js, *.jsx, package.json"
 alwaysApply: false
 ---
 
+# signal-viewer
+
+A personal data analytics tool for exporting, archiving, and analyzing Signal chat history. Provides incremental syncing with deduplication, semantic tagging, link extraction, and daily digest generation.
+
+## Project Structure
+
+```
+├── export-new-chats.sh       # Basic incremental export with deduplication
+├── export-new-chats-fast.sh  # Optimized parallel batch processor (~3-5x faster)
+├── main.py                   # Python message parser, DuckDB loader, link extractor
+├── digest.ts                 # TypeScript daily digest generator with semantic tagging
+├── index.ts                  # Simple JSONL parser for testing
+├── signal-chats/             # Archived messages (per-chat directories)
+├── digests/                  # Generated markdown digests
+└── messages.duckdb           # DuckDB database with parsed messages
+```
+
+## Data Flow
+
+1. `sigexport` extracts Signal data → temporary directory
+2. `export-new-chats*.sh` merges & deduplicates → `signal-chats/`
+3. `main.py` parses JSONL, extracts links, applies tags → `messages.duckdb`
+4. `digest.ts` queries DuckDB → generates markdown digests
+
+## Key Technologies
+
+- **Bun** - Primary TypeScript runtime
+- **DuckDB** - Embedded SQL database for message storage/querying
+- **Python/uv** - Data parsing and optional LLM integration
+- **sigexport** - Upstream Signal data extractor
+
+## Message Format
+
+Messages are JSONL with fields: `date`, `sender`, `body`, `quote`, `sticker`, `reactions`, `attachments`. Deduplication key: `date + sender + body` (MD5 hashed).
+
+## Semantic Tagging
+
+Pattern-based detection for: `[EVENT]`, `[ASK]`, `[OFFER]`, `[BUILD]`, `[LINK]`, `[RESEARCH]`
+
+## Environment Variables
+
+- `GROK_API_KEY` / `GROK_BASE_URL` - Optional LLM for TL;DR summaries in main.py
+
+---
+
+## Bun Preferences
+
 Default to using Bun instead of Node.js.
 
 - Use `bun <file>` instead of `node <file>` or `ts-node <file>`

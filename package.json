@@ -4,14 +4,16 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "chat:get": "./export-new-chats.sh",
-    "chat:fast": "./export-new-chats-fast.sh",
-    "chat:get:full": "uv run sigexport ./signal-chats"
+    "chat:get": "./export-new-chats.sh"
   },
   "devDependencies": {
-    "@types/bun": "1.2.20"
+    "@types/bun": "1.2.21"
   },
   "peerDependencies": {
     "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "chrono-node": "^2.8.4",
+    "duckdb": "^1.3.2"
   }
 }
